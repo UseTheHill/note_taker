@@ -50,16 +50,20 @@ const renderActiveNote = () => {
     $noteText.val("");
   }
 };
-const handleNoteSave = () => {
+
+// Get note data from the inputs. Save it to the db.  Update the view
+const handleNoteSave = function () {
   const newNote = {
-    title: noteTitle.value,
-    text: noteText.value,
+    title: $noteTitle.val(),
+    text: $noteText.val(),
   };
+
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
 };
+
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
