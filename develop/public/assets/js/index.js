@@ -64,20 +64,17 @@ const handleNoteSave = function () {
   });
 };
 
-
 // Delete the clicked note
-const handleNoteDelete = (e) => {
+const handleNoteDelete = function (event) {
   // prevents the click listener for the list from being called when the button inside of it is clicked
-  e.stopPropagation();
+  event.stopPropagation();
+  const note = $(this).parent(".list-group-item").data();
 
-  const note = e.target;
-  const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
-
-  if (activeNote.id === noteId) {
+  if (activeNote.id === note.id) {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
+  deleteNote(note.id).then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
