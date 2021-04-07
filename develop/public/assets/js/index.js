@@ -4,23 +4,6 @@ let $saveNoteBtn = $(".save-note");
 let $newNoteBtn = $(".new-note");
 let $noteList = $(".list-container .list-group");
 
-if (window.location.pathname === '/notes') {
-  noteTitle = document.querySelector('.note-title');
-  noteText = document.querySelector('.note-textarea');
-  saveNoteBtn = document.querySelector('.save-note');
-  newNoteBtn = document.querySelector('.new-note');
-  noteList = document.querySelectorAll('.list-container .list-group');
-}
-
-// Show an element
-const show = (elem) => {
-  elem.style.display = 'inline';
-};
-
-// Hide an element
-const hide = (elem) => {
-  elem.style.display = 'none';
-};
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
@@ -50,20 +33,23 @@ const deleteNote = (id) => {
     method: "DELETE",
   });
 };
+
+// If there is an activeNote, display it, otherwise render empty inputs
 const renderActiveNote = () => {
-  hide(saveNoteBtn);
+  $saveNoteBtn.hide();
 
   if (activeNote.id) {
-    noteTitle.setAttribute('readonly', true);
-    noteText.setAttribute('readonly', true);
-    noteTitle.value = activeNote.title;
-    noteText.value = activeNote.text;
+    $noteTitle.attr("readonly", true);
+    $noteText.attr("readonly", true);
+    $noteTitle.val(activeNote.title);
+    $noteText.val(activeNote.text);
   } else {
-    noteTitle.value = '';
-    noteText.value = '';
+    $noteTitle.attr("readonly", false);
+    $noteText.attr("readonly", false);
+    $noteTitle.val("");
+    $noteText.val("");
   }
 };
-
 const handleNoteSave = () => {
   const newNote = {
     title: noteTitle.value,
