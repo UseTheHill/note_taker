@@ -83,7 +83,7 @@ const handleNoteDelete = function (event) {
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
   e.preventDefault();
-  activeNote = JSON.parse(e.target.parentElement.getAttribute('data-note'));
+  activeNote = $(this).data();
   renderActiveNote();
 };
 
@@ -94,10 +94,10 @@ const handleNewNoteView = (e) => {
 };
 
 const handleRenderSaveBtn = () => {
-  if (!noteTitle.value.trim() || !noteText.value.trim()) {
-    hide(saveNoteBtn);
+  if (!$noteTitle.val().trim() || !$noteText.val().trim()) {
+    $saveNoteBtn.hide();
   } else {
-    show(saveNoteBtn);
+    $saveNoteBtn.show();
   }
 };
 
