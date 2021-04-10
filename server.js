@@ -58,6 +58,27 @@ app.delete("/api/notes/:id", function(req, res) {
       // Change the format back into a JS array
       var notesArr = JSON.parse(data);
 
+        // Iterate through each note in the array
+      notesArr.forEach(note => {
+        // If any of the notes' ids match the id sent from the frontend, delete it
+        note.id === identifier
+        ? notesArr.splice(notesArr.indexOf(note), 1)
+        : console.log("Oops, something went wrong when deleting the note.")
+      });
+
+      // Write the updated note array to the JSON file in the correct format
+      fs.writeFile("Develop/db/db.json", JSON.stringify(notesArr), function(err) {
+        err
+        ? console.log(err)
+        : console.log("Note successfully delete from file.")
+      });
+
+  });
+
+  // Send the updated JSON data to the frontend so the notes display correctly
+  res.sendFile(path.join(__dirname, "Develop/db/db.json")); 
+});
+
 
 // Server begins listening on PORT
 app.listen(PORT, function() {
