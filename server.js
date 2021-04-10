@@ -48,3 +48,12 @@ fs.readFile("Develop/db/db.json", function(err, data) {
  // Send the newly created note to be displayed on route /api/notes
  res.json(newNote);
 });
+// Delete note from the db.json file & send updated notes to frontend
+app.delete("/api/notes/:id", function(req, res) {
+    // Identify which note is being deleted by accessing the id
+    var identifier = req.params.id;
+  
+    // Access the note in the db.json file
+    fs.readFile("Develop/db/db.json", function(err, data) {
+      // Change the format back into a JS array
+      var notesArr = JSON.parse(data);
