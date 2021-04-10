@@ -57,3 +57,9 @@ app.delete("/api/notes/:id", function(req, res) {
     fs.readFile("Develop/db/db.json", function(err, data) {
       // Change the format back into a JS array
       var notesArr = JSON.parse(data);
+
+
+// Server begins listening on PORT
+app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
+});
