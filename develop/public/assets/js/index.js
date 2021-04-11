@@ -1,21 +1,19 @@
-let $noteTitle = $(".note-title");
-let $noteText = $(".note-textarea");
-let $saveNoteBtn = $(".save-note");
-let $newNoteBtn = $(".new-note");
-let $noteList = $(".list-container .list-group");
-
+const $noteTitle = $(".note-title");
+const $noteText = $(".note-textarea");
+const $saveNoteBtn = $(".save-note");
+const $newNoteBtn = $(".new-note");
+const $noteList = $(".list-container .list-group");
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
 // A function for getting all notes from the db
-var getNotes = function() {
+const getNotes = () => {
   return $.ajax({
     url: "/api/notes",
-    method: "GET"
+    method: "GET",
   });
 };
-
 
 // A function for saving a note to the db
 const saveNote = (note) => {
@@ -51,7 +49,7 @@ const renderActiveNote = () => {
   }
 };
 
-// Get note data from the inputs. Save it to the db.  Update the view
+// Get the note data from the inputs, save it to the db and update the view
 const handleNoteSave = function () {
   const newNote = {
     title: $noteTitle.val(),
@@ -81,19 +79,20 @@ const handleNoteDelete = function (event) {
 };
 
 // Sets the activeNote and displays it
-const handleNoteView = (e) => {
-  e.preventDefault();
+const handleNoteView = function () {
   activeNote = $(this).data();
   renderActiveNote();
 };
 
-// Sets the activeNote to and empty object and allows the user to enter a new note
-const handleNewNoteView = (e) => {
+// Sets the activeNote to an empty object and allows the user to enter a new note
+const handleNewNoteView = function () {
   activeNote = {};
   renderActiveNote();
 };
 
-const handleRenderSaveBtn = () => {
+// If a note's title or text are empty, hide the save button
+// Or else show it
+const handleRenderSaveBtn = function () {
   if (!$noteTitle.val().trim() || !$noteText.val().trim()) {
     $saveNoteBtn.hide();
   } else {
@@ -101,7 +100,7 @@ const handleRenderSaveBtn = () => {
   }
 };
 
-// Render the list of note titles
+// Render's the list of note titles
 const renderNoteList = (notes) => {
   $noteList.empty();
 
