@@ -8,38 +8,40 @@ const app = express();
 var PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(express.static(__dirname + '/Develop/public'));
+//app.use(express.static(__dirname + '/Develop/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
 // Establish root/home page
 app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "Develop/public/index.html"));
+    res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 // Display the notes page
 app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "Develop/public/notes.html"));
+  res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
 // Send the JSON data containing the notes to be displayed at route /api/notes
 app.get("/api/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "Develop/db/db.json"));  
+  res.sendFile(path.join(__dirname, "./db/db.json"));  
 });
 
 // Add a note to the db.json file
 app.post("/api/notes", function(req, res) {
+  console.log(req.body)
   // Store the body of the request from a frontend in a variable
   var newNote = req.body;
   // Add a unique id to the object to be able to easily access from the db
   newNote.id = uuid.v4();
 
   // Add the new note to the db.json file
-  fs.readFile("Develop/db/db.json", function(err, data) {
+  fs.readFile("./db/db.json", function(err, data) {
     // First have to change the format back into a JS array
     var notesArr = JSON.parse(data);
     notesArr.push(newNote);
-    fs.writeFile("Develop/db/db.json", JSON.stringify(notesArr), function(err) {
+    fs.writeFile("./db/db.json", JSON.stringify(notesArr), function(err) {
       err
       ? console.log(err)
       : console.log("Note successfully added to file.")
@@ -56,7 +58,7 @@ app.delete("/api/notes/:id", function(req, res) {
   var identifier = req.params.id;
 
   // Access the note in the db.json file
-  fs.readFile("Develop/db/db.json", function(err, data) {
+  fs.readFile("./db/db.json", function(err, data) {
     // Change the format back into a JS array
     var notesArr = JSON.parse(data);
 
@@ -69,7 +71,7 @@ app.delete("/api/notes/:id", function(req, res) {
       });
 
       // Write the updated note array to the JSON file in the correct format
-      fs.writeFile("Develop/db/db.json", JSON.stringify(notesArr), function(err) {
+      fs.writeFile("./db/db.json", JSON.stringify(notesArr), function(err) {
         err
         ? console.log(err)
         : console.log("Note successfully delete from file.")
@@ -78,7 +80,7 @@ app.delete("/api/notes/:id", function(req, res) {
   });
 
   // Send the updated JSON data to the frontend so the notes display correctly
-  res.sendFile(path.join(__dirname, "Develop/db/db.json")); 
+  res.sendFile(path.join(__dirname, "./db/db.json")); 
 });
 
 // Server begins listening on PORT
