@@ -3,7 +3,7 @@
 ## Description
 A note-taking app for helping you stay organized.
 
-## Deployed Link
+## Live Demo
 https://stark-falls-21312.herokuapp.com/
 
 ## Technologies
